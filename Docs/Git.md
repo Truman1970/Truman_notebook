@@ -1,5 +1,3 @@
-[TOC]
-
 ### 常用命令
 
 ```shell
@@ -22,18 +20,18 @@ git commit -m "版本描述信息"
 git remote add "标识名" "远程仓库地址"
 #查看关联的远程仓库
 git remote -v
-#把本地master分支上记录的所有版本推送到远程仓库
-git push "标识名" master
+#把本地main分支上记录的所有版本推送到远程仓库
+git push "标识名" main
 #远程仓库复制到本地，并自动形成一个本地仓库
 git clone "远程仓库地址"
 #增量更新文件
-git pull "标识名" master
+git pull "标识名" main
 
-#查看当前仓库所有分支，仓库中默认只有master分支
+#查看当前仓库所有分支，仓库中默认只有main分支
 git branch
 #新建分支
 git branch "分支名"
-#切换分支，默认分支是master分支
+#切换分支，默认分支是main分支
 git checkout dev
 #简易日志，去掉oneline是全日志
 git log --oneline
@@ -64,7 +62,7 @@ git log --oneline --graph
 
 > - 本地仓库和远程仓库
 > - GitHub和Gitee是Git服务器，可在Git服务器构建远程仓库
-> - 执行 **git commit** 时，默认是在master分支上保存版本
+> - 执行 **git commit** 时，默认是在main分支上保存版本
 > - 每一次 **git commit** 就是一个版本
 > - 两个分支进行合并，但它们含有对同一个文件的修改，则在合并时出现冲突，git无法决断该保留改文件哪个分支的修改
 > - 快速合并和三方合并
