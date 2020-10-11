@@ -1,3 +1,21 @@
+<!-- TOC -->
+
+- [ORACLE学习笔记](#oracle%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0)
+    - [重要概念](#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5)
+    - [创建、删除表空间](#%E5%88%9B%E5%BB%BA%E5%88%A0%E9%99%A4%E8%A1%A8%E7%A9%BA%E9%97%B4)
+    - [创建用户](#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7)
+    - [常见数据类型](#%E5%B8%B8%E8%A7%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)
+    - [创建表](#%E5%88%9B%E5%BB%BA%E8%A1%A8)
+    - [修改表结构2](#%E4%BF%AE%E6%94%B9%E8%A1%A8%E7%BB%93%E6%9E%842)
+    - [数据的增删改](#%E6%95%B0%E6%8D%AE%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9)
+    - [序列](#%E5%BA%8F%E5%88%97)
+    - [scott用户](#scott%E7%94%A8%E6%88%B7)
+    - [单行函数](#%E5%8D%95%E8%A1%8C%E5%87%BD%E6%95%B0)
+    - [条件表达式](#%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F)
+    - [多行函数（聚合函数）](#%E5%A4%9A%E8%A1%8C%E5%87%BD%E6%95%B0%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0)
+    - [参考链接](#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5)
+
+<!-- /TOC -->
 
 ## ORACLE学习笔记
 
@@ -137,9 +155,35 @@ select to_date('2020-10-10 21:07:52','yyyy-mm-ss hh:mi:ss') from dual;
 select e.sal*12+nvl(e.comm, 0) from emp e;
 ```
 
+### 条件表达式
+```
+--给emp表种员工起中文名
+select e.name,
+    case e.name
+        when 'hiccup' then '曹操'
+            when 'tom' then '大猫'
+                when 'sms' then '史密斯'
+                    else '无名'
+                        end
+from emp e;
 
+--判断emp表中员工工资，如果高于3000显示高收入，如果在1500和3000之间，显示中等收入，其余显示低收入
+select e.sal,
+    case e.name
+        when e.sal>3000 then '高收入'
+            when e.sal>1500 then '中等收入' 
+                                else '低收入'
+                    end
+from emp e;
+```
+--注意：Oracle一般都用单引号
 
-
+### 多行函数（聚合函数）
+--注意，一次执行多行要有分号
+select count(1) from emp;
+select sum(sal) from emp;
+select max(sal) from emp;
+select avg(sal) from emp;
 
 ### 参考链接
 [视频教程](https://www.bilibili.com/video/BV1aE411K7u8)

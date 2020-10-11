@@ -1,3 +1,28 @@
+<!-- TOC -->
+
+- [Web安全](#web%E5%AE%89%E5%85%A8)
+    - [暴力破解漏洞](#%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E6%BC%8F%E6%B4%9E)
+        - [有效的字典](#%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E5%85%B8)
+        - [漏洞测试流程](#%E6%BC%8F%E6%B4%9E%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B)
+        - [验证码](#%E9%AA%8C%E8%AF%81%E7%A0%81)
+        - [防范措施](#%E9%98%B2%E8%8C%83%E6%8E%AA%E6%96%BD)
+    - [跨站脚本漏洞 - XSS](#%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%BC%8F%E6%B4%9E---xss)
+        - [跨站脚本漏洞概述](#%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%BC%8F%E6%B4%9E%E6%A6%82%E8%BF%B0)
+        - [反射型XSSget](#%E5%8F%8D%E5%B0%84%E5%9E%8Bxssget)
+        - [存储型XSS](#%E5%AD%98%E5%82%A8%E5%9E%8Bxss)
+        - [DOM型XSS](#dom%E5%9E%8Bxss)
+        - [案例1：GET型XSS获取cookie](#%E6%A1%88%E4%BE%8B1get%E5%9E%8Bxss%E8%8E%B7%E5%8F%96cookie)
+        - [案例2：POST型XSS获取cookie](#%E6%A1%88%E4%BE%8B2post%E5%9E%8Bxss%E8%8E%B7%E5%8F%96cookie)
+        - [案例3：XSS钓鱼 - basic认证](#%E6%A1%88%E4%BE%8B3xss%E9%92%93%E9%B1%BC---basic%E8%AE%A4%E8%AF%81)
+        - [案例4：XSS键盘记录](#%E6%A1%88%E4%BE%8B4xss%E9%94%AE%E7%9B%98%E8%AE%B0%E5%BD%95)
+        - [XSS盲打](#xss%E7%9B%B2%E6%89%93)
+        - [XSS绕过-过滤-转换](#xss%E7%BB%95%E8%BF%87-%E8%BF%87%E6%BB%A4-%E8%BD%AC%E6%8D%A2)
+        - [XSS绕过-过滤-编码](#xss%E7%BB%95%E8%BF%87-%E8%BF%87%E6%BB%A4-%E7%BC%96%E7%A0%81)
+        - [XSS绕过-htmlspecialchars使用](#xss%E7%BB%95%E8%BF%87-htmlspecialchars%E4%BD%BF%E7%94%A8)
+        - [XSS实战练习](#xss%E5%AE%9E%E6%88%98%E7%BB%83%E4%B9%A0)
+    - [相关链接](#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5)
+
+<!-- /TOC -->
 # Web安全
 
 
