@@ -20,6 +20,13 @@
     - [视图](#%E8%A7%86%E5%9B%BE)
     - [索引](#%E7%B4%A2%E5%BC%95)
     - [pl/sql变量](#plsql%E5%8F%98%E9%87%8F)
+    - [pl/sql判断](#plsql%E5%88%A4%E6%96%AD)
+    - [pl/sql循环loop](#plsql%E5%BE%AA%E7%8E%AFloop)
+    - [游标](#%E6%B8%B8%E6%A0%87)
+    - [存储过程](#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B)
+    - [存储函数](#%E5%AD%98%E5%82%A8%E5%87%BD%E6%95%B0)
+    - [out类型参数](#out%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0)
+    - [存储过程和存储函数的区别](#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%92%8C%E5%AD%98%E5%82%A8%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB)
     - [参考链接](#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5)
 
 <!-- /TOC -->
@@ -323,6 +330,173 @@ begin
     select * into emprow from emp where empno = '7878'; 
     dbms_output.put_line(emprow.ename || '的工作为：' || emprow.job);
 end;
+```
+
+### pl/sql判断
+```sql
+declare
+    i number(3) := &ii;--输入，变量名任意
+begin
+    if i<18 then
+        dbms_output.put_line('未成年');
+    elsif i<40 then
+        dbms_output.put_line('中年人');
+    else
+        dbms_output.put_line('老年人');
+    end if;
+end;
+```
+
+### pl/sql循环loop
+```sql
+--while循环
+declare
+    i number(2) := 1;
+begin
+    while i<11 loop
+        dbms_output.put_line(i);
+        i := i+1;
+    end loop;
+end;
+
+--exit循环较为常用
+declare
+    i number(2) := 1;
+begin
+    loop
+        exit when i>10;
+        dbms_output.put_line(i);
+        i := i+1;
+    end loop;
+end;
+
+--for循环
+declare
+begin
+    for i in 1..10 loop
+        dbms_output.put_line(i);
+    end loop;
+end;
+```
+
+### 游标
+```sql
+--游标：可以存放多个对象，多行记录
+---输出emp表中的所有员工的姓名
+declare
+    cursor c1 is select * from emp;
+    emprow emp%rowtype;
+begin
+    open c1;
+        loop
+            fetch c1 into emprow;--一行一行的取
+            exit when c1%notfound;
+            dbms_output.put_line(emprow.ename);
+        end loop;
+    close c1;
+end;
+
+---给指定部门员工涨工资
+declare
+    cursor c2(eno emp.deptno%type) is select empno from emp where deptno = eno;
+    en emp.empno%type
+begin
+    open c2(10);
+        loop
+            fetch c2 into en;
+            exit when c2%notfound;
+            update emp set sal = sal + 100 where empno = en;
+            commit;
+        end loop;
+    close c2;--只赋值一次
+end;
+```
+
+### 存储过程
+```sql
+--存储过程：提前已经编译好的一段pl/sql语言，放置在数据库端可直接别调用，这一段pl/sql一般都是固定步骤的业务
+---给指定员工涨100元
+create or replace procedure p1(eno emp.empno%type)--默认in类型
+as--is也可以，这里相当于declare，做申明用
+begin
+    update emp set sal=sal+100 where empno = eno;
+    commit;
+end;
+
+---调用
+declare
+begin
+    p1(7788);
+end;
+```
+
+### 存储函数
+```sql
+---通过存储函数计算指定员工的年薪
+----存储过程和存储函数的参数都不能带长度，存储函数的返回值类型不能带长度
+create or replace function f_yearsal(eno emp.empno%type) return number--number是类型，不能加长度
+is
+    s number(10);
+begin
+    select sql*12+nvl(comm,0) into s from emp where empno = eno;
+    return s;
+end;
+
+---调用f_yearsal
+declare
+    s number(10);
+begin
+    s := f_yearsal(7788);--需要返回值接收
+    dbms_output.put_line(s);
+end;
+```
+
+### out类型参数
+```sql
+---使用存储过程计算年薪
+create or replace procedure p_yearsal(eno emp.empno%type, yearsal out number)
+is
+    s number(10);
+    c emp.comm%type;
+begin
+    select sal*12,nvl(comm,0) into s, c from emp where empno = eno;
+    yearsal := s+c;
+end;
+
+--调用
+declare
+    yearsal number(10);
+begin
+    p_yearsal(7788, yearsal);
+    dbms_output.put_line(yearsal);
+end;
+
+---in和out类型参数区别：凡是涉及到into查询语句赋值，或者:=赋值操作的参数，都必须使用out参数
+```
+
+### 存储过程和存储函数的区别
+> 语法区别，关键字
+> 存储函数比存储过程多了两个return
+> 本质区别：存储函数有返回值，存储过程无返回值
+```sql
+--查询出员工姓名，员工所在部门名称
+---传统实现
+select e.ename, d.dname
+from emp e, dept d
+where e.deptno = d.deptno;
+
+---使用存储函数实现
+create or replace function fdna(dno dept.deptno%type) return dept.dname%type
+is 
+    dna dept.dname%type;
+begin
+    select d.name into dna from dept where deptno = dno;
+    return dna;
+end;
+
+---调用
+select e.ename, fdna(e.deptno)--只有存储函数可以这样做，因为存储过程没有返回值
+from emp e;
 ```
 
 ### 参考链接
