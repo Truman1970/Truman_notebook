@@ -27,6 +27,7 @@
     - [存储函数](#%E5%AD%98%E5%82%A8%E5%87%BD%E6%95%B0)
     - [out类型参数](#out%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0)
     - [存储过程和存储函数的区别](#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%92%8C%E5%AD%98%E5%82%A8%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB)
+    - [触发器](#%E8%A7%A6%E5%8F%91%E5%99%A8)
     - [参考链接](#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5)
 
 <!-- /TOC -->
@@ -498,6 +499,58 @@ end;
 select e.ename, fdna(e.deptno)--只有存储函数可以这样做，因为存储过程没有返回值
 from emp e;
 ```
+
+### 触发器
+```sql
+--触发器：指定一个规则，在我们做增删改的时候，只要满足规则，自动触发无需调用
+--分为两类，语句级和行级，包含for each row的是行级触发器，加for each now的目的是为了使用:old或者:new对象或者一行记录
+---插入一条记录，输出一个新员工入职---语句级触发器
+create or replace trigger t1
+after 
+insert
+on person
+declare
+    
+begin
+    dbms_output.put_line('一个新员工入职');
+end;
+---触发
+insert into person values(1,'小马');
+commit;
+
+---不能给员工降薪--行级触发器
+create or replace tirgger t2
+before
+update
+on emp
+for each row
+declare
+
+begin
+    if :old.sal>:new.sal then
+        raise_application_error(-20001,'不能给员工降薪')--只能-20001到-20999之间，不能重复
+    end if;
+end;
+---触发
+update emp set sal=sal-1 where empno = 7788;
+commit; 
+
+---使用触发器实现主键自增--行级触发器
+create or replace trigger autoid
+before
+insert
+on person
+for each row
+declare
+
+begin
+    select s_person.nextval into :new.pid from dual;
+end;
+---使用
+insert into person (pname) values ('嗷嗷嗷');
+commit;
+```
+
 
 ### 参考链接
 [视频教程](https://www.bilibili.com/video/BV1aE411K7u8)
