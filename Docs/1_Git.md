@@ -7,6 +7,9 @@
 - [参考链接](#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5)
 
 <!-- /TOC -->
+
+> [其他版本-详细](https://github.com/CyC2018/CS-Notes/blob/master/notes/Git.md)
+
 ### 常用命令
 
 ```shell
