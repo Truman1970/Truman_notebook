@@ -20,6 +20,9 @@
         - [XSS绕过-过滤-编码](#xss%E7%BB%95%E8%BF%87-%E8%BF%87%E6%BB%A4-%E7%BC%96%E7%A0%81)
         - [XSS绕过-htmlspecialchars使用](#xss%E7%BB%95%E8%BF%87-htmlspecialchars%E4%BD%BF%E7%94%A8)
         - [XSS实战练习](#xss%E5%AE%9E%E6%88%98%E7%BB%83%E4%B9%A0)
+    - [sql注入](#sql%E6%B3%A8%E5%85%A5)
+        - [数字型注入](#%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5)
+        - [字符型注入](#%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5)
     - [相关链接](#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5)
 
 <!-- /TOC -->
@@ -216,6 +219,25 @@ payload：#' onclick="alert('xss')"/>
 > xss-lab，放在xmapp的htdocs文件夹中，打开apache，访问即可。
 
 ---
+
+
+## sql注入
+在owasp发布的top10排行榜里，注入漏洞一直是危害排名第一的漏洞，其中注入漏洞里面首当其冲的就是数据库注入漏洞。
+
+### 数字型注入
+```sql
+--mysql, 前半句可以正常查询出一条记录，如果取消注释查询所有记录。
+select eamil where user_id = 1 --or 1=1; 
+```
+
+### 字符型注入
+```sql
+select email where username = 'kobe';-- kobe' or 1=1#
+--在url中构造闭合
+select email where username = 'kobe' or 1=1#'
+```
+
+
 
 ## 相关链接
 [视频教程](https://www.ichunqiu.com/course/63838)[|靶场](https://github.com/zhuifengshaonianhanlu/pikachu)
