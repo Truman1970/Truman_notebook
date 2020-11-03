@@ -483,5 +483,7 @@ kobe' and exists(select * from aa)#
 kobe' and exists(select bb from users)#
 ```
 
+
+
 ## 相关链接
 [视频教程](https://www.ichunqiu.com/course/63838)[|靶场](https://github.com/zhuifengshaonianhanlu/pikachu)

