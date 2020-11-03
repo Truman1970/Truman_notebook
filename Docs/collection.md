@@ -1,7 +1,7 @@
 
 
-## scoop
-<https://scoop-docs.now.sh/docs/>
+## scoop    <https://scoop-docs.now.sh/docs/>
+
 ```shell
 alias       Manage scoop aliases # 别名
 bucket      Manage Scoop buckets # 管理软件仓库
