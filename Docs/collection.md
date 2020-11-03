@@ -1,6 +1,7 @@
 
 
-## scoop    <https://scoop-docs.now.sh/docs/>
+## Scoop
+<https://scoop-docs.now.sh/docs/>
 
 ```shell
 alias       Manage scoop aliases # 别名
@@ -30,7 +31,7 @@ which       Locate a shim/executable (similar to 'which' on Linux) # 查看可�
 ```
 
 
-## you-get
+## You-Get
 <https://github.com/soimort/you-get>
 
 ```shell
@@ -41,11 +42,11 @@ you-get -o "output-dir" url
 you-get -u url
 ```
 
-## github
+## Github
 <https://docs.github.com/cn>
 
 
-## sqlmap
+## Sqlmap
 <http://sqlmap.org/>
 
 ```shell
