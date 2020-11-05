@@ -48,12 +48,10 @@ you-get -u url
 ```shell
 
 name: 'GitHub Actions Mirror'
-
 on: [push, delete]
-
 jobs:
   mirror_to_gitee:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v1
