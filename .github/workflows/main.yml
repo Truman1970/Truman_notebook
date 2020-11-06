@@ -1,17 +1,14 @@
 name: 'GitHub Actions Mirror'
-
 on: [push, delete]
-
 jobs:
   mirror_to_gitee:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
-        uses: actions/checkout@v1
-      - name: 'Mirror to gitee'
-        uses: pixta-dev/repository-mirroring-action@v1
+      - name: Mirror the Github organization repos to Gitee.
+        uses: Yikun/hub-mirror-action@master
         with:
-          target_repo_url:
-            git@gitee.com:tsund/Truman_notebook.git
-          ssh_private_key:
-            ${{ secrets.GITEE_PRIVATE_KEY }}
+          src: github/Truman1970
+          dst: gitee/Truman1970
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
+          account_type: org
