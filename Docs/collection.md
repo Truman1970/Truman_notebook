@@ -54,9 +54,9 @@ name: 'GitHub Actions Mirror'
 on: [push, delete]
 jobs:
   mirror_to_gitee:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-      - name: Mirror the Github organization repos to Gitee.
+      - name: Mirror the Github organization repos to Gitee
         uses: Yikun/hub-mirror-action@master
         with:
           src: github/Truman1970
