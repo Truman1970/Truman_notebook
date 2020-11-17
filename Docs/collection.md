@@ -28,6 +28,10 @@ uninstall   Uninstall an app # 卸载
 update      Update apps, or Scoop itself # 更新
 virustotal  Look for app hash on virustotal.com # 查看哈希值
 which       Locate a shim/executable (similar to 'which' on Linux) # 查看可执行程序路径
+
+
+scoop config aria2-enabled false # 禁用aria2
+scoop config aria2-enabled true # 启用aria2
 ```
 
 
