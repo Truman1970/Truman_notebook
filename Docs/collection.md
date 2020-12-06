@@ -35,51 +35,29 @@ scoop config aria2-enabled true # 启用aria2
 ```
 
 ```shell
-# list
-7zip (v:19.00) [main]
-adb (v:30.0.5) [main]
-aria2 (v:1.35.0-1) [main]
-Audacity (v:2.4.2) [extras]
-baka-mplayer (v:2.0.4) [extras]
-BleachBit (v:4.0.0) [extras]
-ccleaner (v:5.74.8198) [extras]
-concfg (v:0.2020.03.15) [main]
-cryptomator (v:1.5.8) [extras]
-dark (v:) *global*
-dark (v:3.11.2) [main]
-dismplusplus (v:10.1.1001.10) [extras]
-everything (v:1.4.1.992) [extras]
-firefox-developer (v:current) [extras]
-geekuninstaller (v:1.4.7.142) [extras]
-git (v:2.29.2.windows.2) [main]
-googlechrome (v:86.0.4240.183) [extras]
-gpg4win (v:3.1.13) [extras]
-innounp (v:0.49) [main]
-keepassxc (v:2.6.2) [extras]
-lessmsi (v:1.7.0) *global*
-lessmsi (v:1.7.0) [main]
-motrix (v:1.5.15) [extras]
-mysql (v:8.0.22) [main]
-notepadplusplus (v:7.9.1) [extras]
-obs-studio (v:26.0.2) [extras]
-paint.net (v:4.2.13) [extras]
-powertoys (v:0.21.1) [extras]
-python (v:3.9.0)
-Python-embed (v:3.9.0)
-qimgv (v:0.9.1) [extras]
-shadowsocksr-csharp (v:4.9.2) [extras]
-sudo (v:0.2020.01.26) [main]
-telegram (v:2.4.3) [extras]
-typora (v:0.9.96) [extras]
-vcredist2010 (v:10.0.40219.473) [extras]
-vcredist2015 (v:14.0.24215) [extras]
-vivaldi (v:3.4.2066.106)
-vnote (v:2.10) [extras]
-vscodium (v:1.50.1) [extras]
-windows-terminal (v:1.4.3141.0) [extras]
-winpython (v:)
-wox (v:1.3.524) [extras]
-you-get (v:0.4.1475)
+#注意，之前我用的_Scoop_2命名出错，可能和下划线影响ps语法了，总是出错
+#aria2比较坑，还不如不安装
+
+#修改PowerShell的安全策略，让后面的命令正常执行
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+#自定义安装位置
+$env:SCOOP='D:\Scoop'
+[Environment]::SetEnvironmentVariable('SCOOP', $env:SCOOP, 'User')
+#自定义全局安装位置
+$env:SCOOP_GLOBAL='D:\Scoop_G'
+[Environment]::SetEnvironmentVariable('SCOOP_GLOBAL', $env:SCOOP_GLOBAL, 'Machine')
+
+#准备阶段
+scoop install git sudo
+scoop bucket add extras 
+scoop bucket add dorado https://github.com/h404bi/dorado
+scoop install innounp dark lessmsi aria2
+#安装阶段
+scoop install shadowsocksr-csharp wox keepassxc vscodium windows-terminal
+scoop install everything geekuninstaller googlechrome notepadplusplus qimgv snipaste
+scoop install baka-mplayer ccleaner typora telegram 
+scoop install python 
+pip install you-get
 ```
 
 
