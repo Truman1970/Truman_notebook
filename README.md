@@ -1,4 +1,4 @@
-[![](https://badgen.net/badge/icon/rss?icon=rss&label)](https://github.com/Truman1970/Truman_notebook/commits.atom) 
+[![](https://badgen.net/badge/icon/rss?icon=rss&label)](https://github.com/Truman1970/Truman_notebook/releases.atom) 
 [![](https://badgen.net/badge/icon/Telegram?icon=telegram&label)](https://t.me/GnaHz5) 
 
 
