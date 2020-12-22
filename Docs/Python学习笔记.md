@@ -38,3 +38,28 @@ print(b)
 a,b = 2,4
 print(a,b)
 ```
+
+### while
+```python
+c = 1
+while c < 10:
+    print(c)
+    c = c + 1
+```
+
+### for
+```python
+example_list = [1,2,3,4,5,6,7,8,13]
+for i in example_list:
+    print(i)
+```
+
+```python
+#1-9
+for i in range(1,10):
+    print(i)
+#1,4,7
+for i in range(1,10,3):
+    print(i)
+```
+> 小技巧：若是语句前有很多空格或者TAB，选中对应语句，windows中用'Crtl' + '['，可恢复默认格式。  
