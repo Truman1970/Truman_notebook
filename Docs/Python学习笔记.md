@@ -41,6 +41,7 @@ print(a,b)
 
 ### while
 ```python
+#注意冒号
 c = 1
 while c < 10:
     print(c)
@@ -65,3 +66,66 @@ for i in range(1,10,3):
     print(i)
 ```
 > 小技巧：若是语句前有很多空格或者TAB，选中对应语句，windows中用'Crtl' + '['，可恢复默认格式。  
+
+
+### if
+```python
+#hello
+a,b,c = 1,2,0
+if a<b>c:
+    print("hello")
+#hello
+a,b,c = 1,2,0
+if a != c:
+    print("hello")
+```
+
+```python
+#world
+a,b,c = 1,2,0
+if a<c:
+    print("hello")
+else:
+    print('world')
+```
+
+```python
+#a=1
+a = 1
+if a>1:
+    print("a>1")
+elif a<1:
+    print("a<1")
+else:
+    print('a=1')
+```
+
+### def 函数
+```python
+def function():
+    print('This is a function')
+    a = 1
+    print('a')
+function()
+```
+```python
+#1024
+def function(a,b):
+    c = a**b
+    print(a,'^',b,'=',c)
+function(2,10)
+```
+
+### Global 和 Local
+
+```python
+T = 50 #全局变量
+def function():
+    a = 10 #局部变量
+    print(a)
+    print(T) #可以在函数中调用全局变量。
+    return a+100
+print(function())
+#print(a)，不能正常输出a的值，因为a是局部变量。
+print(T)
+```
