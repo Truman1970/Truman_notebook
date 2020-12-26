@@ -1,3 +1,20 @@
+<!-- TOC -->
+
+- [print](#print)
+- [数学运算](#数学运算)
+- [自变量](#自变量)
+- [while](#while)
+- [for](#for)
+- [if](#if)
+- [def 函数](#def-函数)
+- [Global 和 Local](#global-和-local)
+- [读写文件](#读写文件)
+- [参考链接](#参考链接)
+
+<!-- /TOC -->
+
+
+
 环境：3.x版本  
 > 3.x和2.x区别？
 ### print
