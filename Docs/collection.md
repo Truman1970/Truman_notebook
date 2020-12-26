@@ -1,5 +1,6 @@
 
 
+
 ## Scoop
 <https://scoop-docs.now.sh/docs/>
 
@@ -115,3 +116,76 @@ python sqlmap.py -u url -D pikachu -T users -C username,password --dump    #列�
 python sqlmap.py --update       #更新
 
 ```
+
+
+## vscodium
+
+### 插件
+```shell
+# 汉化
+Chinese (Simplified) Language Pack for Visual Studio Codium
+# markdown相关
+Auto Markdown TOC
+Markdown All in One
+markdownlint
+# Python环境
+Python
+```
+
+### vscodium 配置python环境
+参考：<https://blog.csdn.net/Zhangguohao666/article/details/105040139>
+
+## F-Droid
+<https://f-droid.org/zh_Hans/docs/>
+<https://forum.f-droid.org/t/known-repositories/721>
+
+### 使用注意
+> 在收录的自由软件中，官方特别标示了一些带有垃圾特性〔anti-feature〕的应用，默认无法被搜索到。需要在设置 – 应用兼容性 – 包括带有 anti-feature 的应用中调整。  
+
+### 存储库
+```shell
+# 清华大学开源软件镜像站
+https://mirrors.tuna.tsinghua.edu.cn/fdroid/repo/?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB
+# Archive 库
+https://mirrors.tuna.tsinghua.edu.cn/fdroid/archive?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB
+```
+> 添加完成后，还需要选择存储库中的第二个 F-Droid 库，只保留刚才添加的用户镜像，其他镜像悉数关闭，保证软件只从国内镜像站获取更新。  
+> 参考：<https://sspai.com/post/63647#!>
+
+
+```shell
+# 第三方库
+https://apt.izzysoft.de/fdroid/repo
+```
+
+```shell
+# 第三方库
+https://fdroid.rakshazi.me/repo?fingerprint=80BF9EC0BCCED7DA2C9B272FA9B53A30E5B79282CFD629BDE14AB1FF1658C02E
+```
+> IzzyOnDroid，Rakshazi F-Droid等第三方库并无国内源，所以下载速度较慢。  
+
+
+```shell
+# 南京大学镜像
+https://mirrors.nju.edu.cn/fdroid/repo/?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB​
+```
+
+### 常用软件
+```shell
+andOTP
+Tusky
+Telegram FOSS
+Keepass2Android
+NewPipe
+Tor
+AntennaPod
+Foxy Droid
+Aurora Store
+同文输入法
+LBRY
+```
+
+## 文件传输
+### 在线局域网传输
+<https://www.ssavr.com/>
+<https://airportal.cn/>

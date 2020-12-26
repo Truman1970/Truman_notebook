@@ -129,3 +129,49 @@ print(function())
 #print(a)，不能正常输出a的值，因为a是局部变量。
 print(T)
 ```
+### 读写文件
+```python
+# 如果没有该文件，就会新建该文件，然后写入。
+text = "This is first line.\nThis is seconde line."
+my_file = open("D:\_hiccup\_todo\my_file.txt","w")
+my_file.write(text)
+my_file.close
+```
+
+```python
+# 追加写入
+text = "\nThis is appended line."
+my_file = open("D:\_hiccup\_todo\my_file.txt","a")
+my_file.write(text)
+my_file.close
+```
+
+```python
+# 读取文件内容，并打印
+file = open("my_file.txt","r")
+content = file.read()
+print(content)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 参考链接
+<https://www.bilibili.com/video/BV1wW411Y7ai?from=search&seid=5616743581222647371>
