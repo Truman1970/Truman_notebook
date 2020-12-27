@@ -160,15 +160,11 @@ Python
 > 在收录的自由软件中，官方特别标示了一些带有垃圾特性〔anti-feature〕的应用，默认无法被搜索到。需要在设置 – 应用兼容性 – 包括带有 anti-feature 的应用中调整。  
 
 ### 存储库
-```shell
-# 清华大学开源软件镜像站
-https://mirrors.tuna.tsinghua.edu.cn/fdroid/repo/?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB
-# Archive 库
-https://mirrors.tuna.tsinghua.edu.cn/fdroid/archive?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB
-```
-> 添加完成后，还需要选择存储库中的第二个 F-Droid 库，只保留刚才添加的用户镜像，其他镜像悉数关闭，保证软件只从国内镜像站获取更新。参考：<https://sspai.com/post/63647#!>  
-
-
+清华大学开源软件镜像站
+<https://mirrors.tuna.tsinghua.edu.cn/fdroid/repo/?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB>
+Archive 库
+<https://mirrors.tuna.tsinghua.edu.cn/fdroid/archive?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB>
+ 
 ```shell
 # 第三方库
 https://apt.izzysoft.de/fdroid/repo  
