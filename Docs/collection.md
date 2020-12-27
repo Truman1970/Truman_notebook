@@ -161,22 +161,18 @@ Python
 
 ### 存储库
 清华大学开源软件镜像站  
-<https://mirrors.tuna.tsinghua.edu.cn/fdroid/repo/?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB>
+<https://mirrors.tuna.tsinghua.edu.cn/fdroid/repo/?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB>  
 Archive 库  
-<https://mirrors.tuna.tsinghua.edu.cn/fdroid/archive?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB>
- 
-```shell
-# 第三方库
-https://apt.izzysoft.de/fdroid/repo  
-https://fdroid.rakshazi.me/repo?fingerprint=80BF9EC0BCCED7DA2C9B272FA9B53A30E5B79282CFD629BDE14AB1FF1658C02E  
-```
+<https://mirrors.tuna.tsinghua.edu.cn/fdroid/archive?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB>   
+
+南京大学镜像    
+<https://mirrors.nju.edu.cn/fdroid/repo/?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB​>  
+
+第三方库  
+<https://apt.izzysoft.de/fdroid/repo>   
+<https://fdroid.rakshazi.me/repo?fingerprint=80BF9EC0BCCED7DA2C9B272FA9B53A30E5B79282CFD629BDE14AB1FF1658C02E>  
 > IzzyOnDroid，Rakshazi F-Droid等第三方库并无国内源，所以下载速度较慢。  
 
-
-```shell
-# 南京大学镜像
-https://mirrors.nju.edu.cn/fdroid/repo/?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB​
-```
 
 ### 常用软件
 ```shell
