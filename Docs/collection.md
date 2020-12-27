@@ -160,9 +160,9 @@ Python
 > 在收录的自由软件中，官方特别标示了一些带有垃圾特性〔anti-feature〕的应用，默认无法被搜索到。需要在设置 – 应用兼容性 – 包括带有 anti-feature 的应用中调整。  
 
 ### 存储库
-清华大学开源软件镜像站
+清华大学开源软件镜像站  
 <https://mirrors.tuna.tsinghua.edu.cn/fdroid/repo/?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB>
-Archive 库
+Archive 库  
 <https://mirrors.tuna.tsinghua.edu.cn/fdroid/archive?fingerprint=43238D512C1E5EB2D6569F4A3AFBF5523418B82E0A3ED1552770ABB9A9C9CCAB>
  
 ```shell
