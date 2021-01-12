@@ -7,6 +7,7 @@
 - [条件语句](#条件语句)
 - [字典](#字典)
 - [集合](#集合)
+- [for循环](#for循环)
 
 <!-- /TOC -->
 
@@ -244,4 +245,106 @@ for i,j in d.values():
 
 > 集合自动去重，但不支持下标，没有顺序。  
 
+
+### for循环
+
+```python
+a = [1,2,3,4]
+for i in a:
+  print(i)
+```
+
+**break终止循环**
+```python
+a = [1,2,3,4]
+for i in a:
+  if i == 2:
+    break
+  print(i)
+# 输出：1
+```
+> 没有完成循环，条件成立直接推出循环，循环强制结束。  
+
+**Continue退出本次循环，继续执行下次循环**
+```python
+a = [1,2,3,4]
+for i in a:
+  if i == 2:
+    continue
+  print(i)
+# 输出：1 3 4
+```
+> Continue退出本次循环，继续执行下次循环，最终走完整个循环，循环正常结束。  
+
+**for ... else**
+```python
+a = [1,2,3,4]
+for i in a:
+  print(i)
+else:
+  print("循环正常结束才会执行此代码")
+```
+> 循环正常结束后，才会执行else的语句。continue支持else，但break不支持else。  
+
+**公共操作-enumerate()**
+- enumerate()一般用在for循环中，可以将一个能遍历的数据对象（如列表、元组或者字符串）组合成一个索引序列，同时列出数据和数据下标。
+- 语法：enumerate(可遍历对象，start=0)，默认下标是0。
+
+```python
+a = ['我','是','你','爸爸']
+for i in enumerate(a):
+  print(i)
+# 输出
+# (0, '我')
+# (1, '是')
+# (2, '你')
+# (3, '爸爸')
+```
+
+```python
+a = ['我','是','你','爸爸']
+for i,j in enumerate(a,1):
+  print(f'下标是：{i}，数据是：{j}')
+# 输出
+# 下标是：1，数据是：我
+# 下标是：2，数据是：是
+# 下标是：3，数据是：你
+# 下标是：4，数据是：爸爸
+```
+
+**列表推导式**
+- range(0,11,1)，开始下标默认是0（可以省略），结束下标是11，默认步长为1（可以省略），不包括结束下标。
+- 什么是推导式：简化代码代码。
+
+```python
+a = []
+for i in range(0,11):
+  a.append(i)
+print(a)
+
+# 等同于
+
+a = [i for i in range(0,11)]
+print(a)
+
+# 遍历0-10之间的偶数
+a = [i for i in range(0,11) if i%2==0]
+print(a)
+```
+
+**字典推导式**
+```python
+# 两个列表合成一个字典
+a = ['苹果','橘子','香蕉']
+b = [12,23,34]
+c = {a[i]:b[i] for i in range(len(a))}
+print(c)
+```
+
+```python
+# 挑出大于30个水果集合
+c = {'苹果':12, '橘子':23, '香蕉':34}
+d = {i:j for i,j in c.items() if j>30}
+print(d)
+```
 
