@@ -8,6 +8,11 @@
 - [字典](#字典)
 - [集合](#集合)
 - [for循环](#for循环)
+- [while循环](#while循环)
+- [函数](#函数)
+- [局部变量](#局部变量)
+- [全局变量](#全局变量)
+- [返回值 return](#返回值-return)
 
 <!-- /TOC -->
 
@@ -348,3 +353,118 @@ d = {i:j for i,j in c.items() if j>30}
 print(d)
 ```
 
+### while循环
+
+```python
+i = 1
+while i <= 5:
+  print(i)
+  i = i + 1
+```
+
+```python
+# break终止循环，直接退出循环。
+i = 1
+while i <= 5:
+  if i == 3:
+    break
+  print(i)
+  i = i + 1
+# 输出：1 2
+```
+
+```python
+# continue
+i = 1
+while i <= 5:
+  if i == 3:
+    continue
+  print(i)
+  i = i + 1
+# 死循环
+```
+
+### 函数
+> 先定义，再调用。  
+
+```python
+# 定义函数
+def add(a,b):
+  # 说明文档内容
+  """加法函数"""
+  c = a + b
+  print(c)
+# 调用函数
+add(1,2)
+# 说明文档调用
+help(add)
+```
+
+> 位置参数：在定义函数时，参数的名字和位置已经被确定。   
+
+**关键字参数**
+```python
+def function(姓名,年龄,性别):
+  print(f'姓名是{姓名}，年龄是{年龄}，性别是{性别}')
+
+# 传入实参时，明确形参的变量名，参数之间不存在先后顺序。  
+function(姓名='张飞',性别='男',年龄=12)
+# 调用函数时，如果有位置参数，位置参数必须在关键字参数的前面。  
+function('张飞',年龄=12,性别='男')
+```
+
+**默认参数**
+```python
+def function(姓名,年龄,性别='男'):
+  print(f'姓名是{姓名}，年龄是{年龄}，性别是{性别}')
+
+# 默认是男，重新赋值才能改变初始值
+function('张飞',12)
+function('黛玉',16,'女')
+```
+
+**可变参数（收集参数）**
+```python
+def fun(*args):
+  print(args)
+fun('张飞')   # ('张飞',)
+fun('张飞',12)    # ('张飞', 12)
+```
+> 位置可变参数，接收所有的位置参数，返回一个元组。  
+
+### 局部变量
+```python
+def fun():
+  a = 520
+  print(a)
+print(a)
+# 函数外调用报错
+```
+
+### 全局变量
+```python
+a = 520
+def fun():
+  print(a)
+print(a)
+# 函数内外调用都正常。
+```
+
+```python
+# 修改全局变量，一般不改。
+a = 520
+def fun():
+  # 声明a是一个全局变量
+  global a 
+  a = 1
+  print(a)
+fun() # 输出 1
+```
+
+### 返回值 return
+```python
+def add(a,b):
+  return a+b
+add(1,2)
+```
+> 遇到return退出当前函数。    
