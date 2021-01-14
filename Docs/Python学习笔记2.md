@@ -13,9 +13,13 @@
 - [局部变量](#局部变量)
 - [全局变量](#全局变量)
 - [返回值 return](#返回值-return)
+- [文件](#文件)
+- [OS](#os)
+- [异常处理](#异常处理)
 
 <!-- /TOC -->
 
+<https://www.bilibili.com/video/BV1gt4y1D7W8>  
 
 ### Python 基础入门
 > print函数自带回车？  
@@ -468,3 +472,36 @@ def add(a,b):
 add(1,2)
 ```
 > 遇到return退出当前函数。    
+
+### 文件
+<https://www.bilibili.com/video/BV1gt4y1D7W8?p=12>   
+```python
+文件对象 = open('文件名','访问模式')  
+文件对象 = close()  
+文件对象.write('内容')  
+文件对象.read('num')  
+文件对象.readlines()  
+文件对象.seek(偏移量，起始位置)  
+```
+
+### OS
+```python
+import os
+# 重命名
+os.rename('旧文件名','新文件名')
+os.rename('旧文件夹名','新文件夹名')
+# 删除文件
+os.remove('目标文件')
+# 创建、删除文件夹
+os.mkdir('文件夹名')
+os.rmdir('文件夹名')
+# 获取当前.py文件所在路径
+os.getcwd()
+# 改变工作目录到指定目录
+os.chdir('aa')
+# 获取某个文件夹下所有文件和文件名
+os.listdir(目录)
+```
+
+### 异常处理
+<https://www.bilibili.com/video/BV1gt4y1D7W8?p=13>  
