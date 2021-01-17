@@ -16,6 +16,8 @@
 - [文件](#文件)
 - [OS](#os)
 - [异常处理](#异常处理)
+- [Python 路径](#python-路径)
+- [pandas与excel](#pandas与excel)
 
 <!-- /TOC -->
 
@@ -505,3 +507,135 @@ os.listdir(目录)
 
 ### 异常处理
 <https://www.bilibili.com/video/BV1gt4y1D7W8?p=13>  
+
+
+### Python 路径
+```python
+import os
+# 指定工作路径-绝对路径后，可以直接调用文件。
+os.chdir('路径')
+# 获取当前.py文件路径
+os.getcwd()
+```
+> 路径的字符`\`、`/`、`r`  
+
+**自动路径连接**
+```python
+# D:\_hiccup\_todo\test.py
+import os
+P1 = 'D:'
+P2 = '\_hiccup'
+P3 = '_todo'
+路径 = os.path.join(P1,P2,P3)
+print(路径)
+```
+
+**显示文件夹中所有元素**
+```python
+import os
+# os.chdir('路径')
+print(os.listdir())
+```
+> 另一个遍历函数：os.scandir()  
+
+**判断文件和文件夹**
+```python
+import os
+# os.chdir('路径')
+列表 = os.listdir()
+for i in 列表:
+  print(i,os.path.isdir(i))
+  # print(i,os.path.isfile(i))
+```
+
+**文件夹和文件筛选**
+```python
+import os
+# os.chdir('路径')
+列表 = os.listdir()
+文件 = []
+文件夹 = []
+for i in 列表:
+  if os.path.isdir(i) == True:
+    文件夹.append(i)
+  else:
+    文件.append(i)
+print(文件)
+print(文件夹)
+```
+
+**时间戳转换**
+```python
+import datetime as dt
+日期时间 = dt.datetime.fromtimestamp(1592442400)
+print(日期时间)
+# 当前日期
+当前日期 = datetime.now().date().strftime('%Y-%m-%d')
+print(当前日期)
+# 当前时间
+当前时间 = datetime.now().time().strftime('%H:%M:%S')
+print(当前时间)
+```
+
+**文件属性**
+```python
+import os
+a = os.stat('./README.md')
+print(a)
+```
+
+### pandas与excel
+
+**DataFrame**
+
+```python
+import pandas as pd
+r = r'D:\_hiccup\_todo\test.csv'
+s = pd.DataFrame({'姓名':[1,2,3],'年龄':[4,5,6],'性别':[7,8,9]})
+s = s.set_index('姓名')
+s.to_csv(r)
+print(s)
+```
+
+**read_csv**
+```python
+import pandas as pd
+r = r'D:\_hiccup\_todo\test.csv'
+s = pd.read_csv(r)
+# 几行几列，不包括表头
+print(s.shape)
+# 打印列名
+print(s.columns)
+# 打印索引
+print(s.index)
+# 打印每列的数据类型
+print(s.dtypes)
+# 打印内容
+print(s)
+```
+read_csv 参数
+- sep = ''，分隔符或者正则表达式 sep = '\s+'
+- header = None，没有表头。
+- names = []，设置表头，一般和header一起使用
+- index_col = ''，设置多个索引用列表
+- skiprows，从文件某处开始，需要跳过的行数或行号列表
+- encoding，文本编码
+- nrows，从文件开头处读入的行数
+
+```python
+# txt转换为csv
+import pandas as pd
+r = r'D:\_hiccup\_todo\test.csv'
+r2 = r'D:\_hiccup\_todo\test.txt'
+s = pd.read_csv(r)
+s.to_csv(r2)
+print(s)
+```
+
+**read_table**
+```python
+import pandas as pd
+r = r'D:\_hiccup\_todo\test.csv'
+s = pd.read_table(r,sep='\s+')
+print(s)
+```
