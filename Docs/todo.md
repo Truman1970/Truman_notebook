@@ -7,3 +7,7 @@ redmi 9a adb卸载预留软件
 
 安卓安装使用同文输入法  
 <https://github.com/Bambooin/rimerc>   
+
+v2ray  
+<https://github.com/2dust/v2rayNG/releases>  
+
