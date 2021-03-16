@@ -11,3 +11,5 @@ redmi 9a adb卸载预留软件
 v2ray  
 <https://github.com/2dust/v2rayNG/releases>  
 
+scoop bucket自建教程   
+<https://zhuanlan.zhihu.com/p/165635039>
